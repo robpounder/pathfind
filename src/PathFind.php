@@ -2,12 +2,14 @@
 
 namespace PathFind;
 
+use PathFind\Contracts\CoordinateValidatorContract;
+use PathFind\Contracts\MapValidatorContract;
 use PathFind\Contracts\PathFindContract;
-use PathFind\Contracts\PathFindValidatorContract;
 use PathFind\Exceptions\InvalidCoordinateException;
 use PathFind\Exceptions\InvalidMapException;
 use PathFind\Exceptions\InvalidPathException;
-use PathFind\Validation\PathFindValidator;
+use PathFind\Validation\CoordinateValidator;
+use PathFind\Validation\MapValidator;
 
 class PathFind implements PathFindContract
 {
@@ -21,11 +23,13 @@ class PathFind implements PathFindContract
     private int $rows;
     private int $cols;
 
-    private PathFindValidatorContract $validator;
+    private MapValidatorContract $mapValidator;
+    private CoordinateValidatorContract $coordinateValidator;
 
     public function __construct()
     {
-        $this->validator = new PathFindValidator();
+        $this->mapValidator = new MapValidator();
+        $this->coordinateValidator = new CoordinateValidator();
     }
 
     /**
@@ -35,14 +39,14 @@ class PathFind implements PathFindContract
      */
     public function pathFind(array $map, array $coordinatesFrom, array $coordinatesTo): int
     {
-        if (!$this->validator->validateMap($map)) {
+        if (!$this->mapValidator->validateMap($map)) {
             throw new InvalidMapException('Invalid Map');
         }
 
         $this->setMap($map);
 
-        if (!($this->validator->validateCoordinates($coordinatesFrom, $this->map)
-            && $this->validator->validateCoordinates($coordinatesTo, $this->map))) {
+        if (!($this->coordinateValidator->validateCoordinates($coordinatesFrom, $this->rows, $this->cols)
+            && $this->coordinateValidator->validateCoordinates($coordinatesTo, $this->rows, $this->cols))) {
             throw new InvalidCoordinateException('Invalid Coordinates');
         }
 
@@ -82,7 +86,8 @@ class PathFind implements PathFindContract
                 $newColumn = $currentColumn + $direction[1];
 
                 if (
-                    $this->validator->validateCell($newRow, $newColumn, $this->rows, $this->cols)
+                    $this->coordinateValidator->validateCoordinate($newRow, $this->rows)
+                    && $this->coordinateValidator->validateCoordinate($newColumn, $this->cols)
                     && isset($this->map[$newRow][$newColumn])
                     && PathFindContract::SPACE === $this->map[$newRow][$newColumn]
                     && !isset($previous[$newRow][$newColumn])
