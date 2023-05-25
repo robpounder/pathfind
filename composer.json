@@ -1,0 +1,27 @@
+{
+  "name": "robpounder/pathfind",
+  "description": "Code Test for Oxbury",
+  "authors": [
+    {
+      "name": "Robert Pounder",
+      "email": "rob.j.pounder@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "PathFind\\": "src/"
+    },
+    "files": []
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.1"
+  },
+  "require": {
+    "fzaninotto/faker": "^1.5"
+  }
+}
