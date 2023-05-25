@@ -65,7 +65,7 @@ class PathFind implements PathFindContract
         $previous = [];
         $distances = [];
 
-        $previous[$coordinatesFrom[0]][$coordinatesFrom[1]] = PathFindContract::SPACE;
+        $previous[$coordinatesFrom[0]][$coordinatesFrom[1]] = 1;
         $distances[$coordinatesFrom[0]][$coordinatesFrom[1]] = 0;
 
         while (!empty($processQueue)) {
@@ -88,7 +88,7 @@ class PathFind implements PathFindContract
                     && !isset($previous[$newRow][$newColumn])
                 ) {
                     $distances[$newRow][$newColumn] = $distances[$currentRow][$currentColumn] + 1;
-                    $previous[$newRow][$newColumn] = PathFindContract::SPACE;
+                    $previous[$newRow][$newColumn] = 1;
                     $processQueue[] = [$newRow, $newColumn];
                 }
             }
