@@ -23,7 +23,7 @@ class PathFindTest extends TestCase
     public function canFindFastestPathWithSetMap()
     {
         $this->pathFind->setMap($this->maps()['ExampleMap']);
-        $result = $this->pathFind->pathDistance([0, 1], [3, 2]);
+        $result = $this->callPrivateMethod($this->pathFind, 'pathDistance', [[0, 1], [3, 2]]);
 
         $this->assertEquals(6, $result);
     }
@@ -47,7 +47,7 @@ class PathFindTest extends TestCase
     {
         $this->pathFind->setMap($this->maps()['NoPathMap']);
         $this->expectException(InvalidPathException::class);
-        $this->pathFind->pathDistance([0, 0], [0, 4]);
+        $this->callPrivateMethod($this->pathFind, 'pathDistance', [[0, 0], [0, 4]]);
     }
 
     /** @test */
@@ -61,7 +61,7 @@ class PathFindTest extends TestCase
     public function canSolveHardMap(): void
     {
         $this->pathFind->setMap($this->maps()['HardMap']);
-        $result = $this->pathFind->pathDistance([0, 0], [4, 4]);
+        $result = $this->callPrivateMethod($this->pathFind, 'pathDistance', [[0, 0], [4, 4]]);
         $this->assertEquals(16, $result);
     }
 }

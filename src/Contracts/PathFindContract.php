@@ -22,11 +22,4 @@ interface PathFindContract
      * Sets the map for processing
      */
     public function setMap(array $map): void;
-
-    /**
-     * @return int
-     *
-     * Returns the distance between the 2 coordinates while avoiding walls
-     */
-    public function pathDistance(array $coordinatesFrom, array $coordinatesTo): int;
 }

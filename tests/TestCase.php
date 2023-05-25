@@ -4,6 +4,7 @@ namespace Tests;
 
 use PathFind\Contracts\PathFindContract;
 use PHPUnit\Framework\TestCase as PHPUnit;
+use ReflectionClass;
 
 class TestCase extends PHPUnit
 {
@@ -47,5 +48,14 @@ class TestCase extends PHPUnit
                 [$space, $space, $space, $wall, $space],
             ],
         ];
+    }
+
+    public function callPrivateMethod(&$object, $method, array $args = [])
+    {
+        $reflection = new ReflectionClass(get_class($object));
+        $method = $reflection->getMethod($method);
+        $method->setAccessible(true);
+
+        return $method->invokeArgs($object, $args);
     }
 }

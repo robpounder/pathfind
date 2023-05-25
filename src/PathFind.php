@@ -63,7 +63,7 @@ class PathFind implements PathFindContract
     /**
      * @throws InvalidPathException
      */
-    public function pathDistance(array $coordinatesFrom, array $coordinatesTo): int
+    private function pathDistance(array $coordinatesFrom, array $coordinatesTo): int
     {
         $processQueue = [$coordinatesFrom];
         $previous = [];
