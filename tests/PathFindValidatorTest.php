@@ -22,7 +22,7 @@ class PathFindValidatorTest extends TestCase
     }
 
     /** @test */
-    public function canValidateCell()
+    public function canValidateCoordinate(): void
     {
         $num = $this->faker->randomDigit;
         $this->assertTrue($this->coordinateValidator->validateCoordinate($num,$num + 1));
